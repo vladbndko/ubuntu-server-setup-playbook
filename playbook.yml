@@ -1,0 +1,36 @@
+- hosts: servers
+  gather_facts: false
+  vars_files:
+    - vars.yml
+
+  # Tasks
+  tasks:
+    - import_tasks: tasks/packages.yml
+    - import_tasks: tasks/firewall.yml
+    - import_tasks: tasks/user.yml
+    - import_tasks: tasks/nginx.yml
+    - import_tasks: tasks/mysql.yml
+    - import_tasks: tasks/adminer.yml
+    - import_tasks: tasks/websites.yml
+
+  # Handlers
+  handlers:
+    # Restart Firewall
+    - name: Reload ufw
+      tags: ufw
+      ufw:
+        state: reloaded
+
+    # Restart NGINX
+    - name: Restart nginx
+      tags: nginx
+      service:
+        name: nginx
+        state: restarted
+
+    # Restart SSHD
+    - name: Reload sshd
+      tags: sshd
+      service:
+        name: sshd
+        state: restarted

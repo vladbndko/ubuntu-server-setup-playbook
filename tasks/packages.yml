@@ -1,0 +1,56 @@
+- name: Upgrade all apt packages
+  tags: packages
+  apt:
+    upgrade: dist
+    force_apt_get: true
+    
+- name: Install packages
+  tags: packages
+  apt:
+    update_cache: true
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - lsb-release
+    - ca-certificates
+    - apt-transport-https
+    - software-properties-common
+    - unzip
+    - imagemagick
+    - python3-pip
+    - bat
+
+- name: Add Docker GPG apt Key
+  tags: packages
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker Repository
+  tags: packages
+  apt_repository:
+    repo: "deb https://download.docker.com/linux/ubuntu {{ distribution_release }} stable"
+    state: present
+
+- name: Update apt and install docker-ce
+  tags: packages
+  apt:
+    update_cache: true
+    name: docker-ce
+    state: latest
+
+- name: Install Docker Module for Python
+  tags: packages
+  pip:
+    name: docker
+  
+
+- name: Remove useless packages from the cache
+  tags: packages
+  apt:
+    autoclean: true
+
+- name: Remove dependencies that are no longer required
+  tags: packages
+  apt:
+    autoremove: true

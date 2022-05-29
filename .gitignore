@@ -1,0 +1,4 @@
+.vscode
+.idea
+vars.yml
+inventory.ini

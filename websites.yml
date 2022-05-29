@@ -1,0 +1,13 @@
+websites:
+# ARDI: Sender
+- domain: sender.ardi.local
+  directory: ARDI/sender
+  config: laravel.j2
+# Nash MeetUp
+- domain: nashmeetup.local
+  directory: NashMeetUp/nashmeetup
+  config: laravel.j2
+# Nash MeetUp Work
+- domain: work.nashmeetup.local
+  directory: NashMeetUp/nashmeetup-work
+  config: laravel.j2

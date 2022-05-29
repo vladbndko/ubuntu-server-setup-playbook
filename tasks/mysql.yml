@@ -1,0 +1,28 @@
+- name: Create a network
+  tags: mysql
+  docker_network:
+    name: db_network
+
+- name: Pull an MySQL image
+  tags: mysql
+  docker_image:
+    name: mysql
+    source: pull
+    tag: "{{ mysql.version }}"
+
+- name: Create a MySQL container
+  tags: mysql
+  docker_container:
+    name: mysql_server
+    image: "mysql:{{ mysql.version }}"
+    restart_policy: unless-stopped
+    restart: true
+    volumes:
+      - mysql_data:/var/lib/mysql
+    env:
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_ROOT_PASSWORD: "{{ mysql.password }}"
+    ports:
+      - "{{ mysql.port }}:3306"
+    networks:
+      - name: db_network

@@ -1,0 +1,27 @@
+- name: Update hosts
+  tags: websites
+  lineinfile:
+    path: /etc/hosts
+    line: "127.0.0.1 {{ item.host }}"
+    create: yes
+  loop: "{{ websites }}"
+
+- name: Create directories for websites
+  tags: websites
+  file:
+    path: "/var/www/{{ item.host }}"
+    state: directory
+    recurse: yes
+    owner: "{{ user.username }}"
+    group: "{{ user.username }}"
+  when: item.proxy == false
+  loop: "{{ websites }}"
+
+- name: Copy NGINX config
+  tags: websites
+  template:
+    src: "files/nginx/templates/{{ item.config }}.j2"
+    dest: "/etc/nginx/conf.d/{{ item.host }}.conf"
+  loop: "{{ websites }}"
+  notify:
+    - Restart nginx

@@ -1,0 +1,11 @@
+username: username
+
+distribution_release: focal
+
+mysql:
+  username: username
+  password: password
+  port: 3306
+
+adminer:
+  port: 8080

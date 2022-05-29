@@ -1,0 +1,33 @@
+- name: Pull an Adminer image
+  tags: adminer
+  docker_image:
+    name: adminer
+    source: pull
+    tag: "{{ adminer.version }}"
+
+- name: Create a Adminer container
+  tags: adminer
+  docker_container:
+    name: adminer
+    image: "adminer:{{ adminer.version }}"
+    restart_policy: unless-stopped
+    restart: true
+    env:
+      ADMINER_DEFAULT_SERVER: mysql_server
+      ADMINER_DEFAULT_USER: root
+      ADMINER_DESIGN: nette
+      ADMINER_PLUGINS: tables-filter tinymce
+    ports:
+      - "{{ adminer.port }}:8080"
+    networks:
+      - name: db_network
+      
+- name: Copy plugin
+  tags: adminer
+  copy: 
+    src: files/adminer/login-servers.php
+    dest: /tmp
+
+- name: Copy plugin into container
+  tags: adminer
+  shell: docker cp /tmp/login-servers.php adminer:/var/www/html/plugins-enabled/login-servers.php

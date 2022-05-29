@@ -1,0 +1,10 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name {{ item.host }};
+    root   /var/www/{{ item.host }};
+	index  index.html;
+
+    error_log  /var/log/nginx/{{ item.host }}-error.log;
+    access_log /var/log/nginx/{{ item.host }}-access.log;
+}

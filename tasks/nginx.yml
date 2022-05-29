@@ -1,0 +1,53 @@
+- name: Download NGINX PGP-key
+  tags: nginx
+  get_url:
+    url: http://nginx.org/keys/nginx_signing.key
+    dest: /etc/nginx_signing.key
+
+- name: Install NGINX PGP-key
+  tags: nginx
+  apt_key:
+    file: /etc/nginx_signing.key
+    state: present
+
+- name: Add NGINX Repo deb
+  tags: nginx
+  apt_repository:
+    repo: "deb [arch=amd64] http://nginx.org/packages/mainline/ubuntu/ {{ distribution_release }} nginx"
+    state: present
+    filename: nginx
+
+- name: Add NGINX Repo deb-src
+  tags: nginx
+  apt_repository:
+    repo: "deb-src https://nginx.org/packages/mainline/ubuntu/ {{ distribution_release }} nginx"
+    state: present
+    filename: nginx
+
+- name: Install NGINX
+  tags: nginx
+  apt:
+    update_cache: yes
+    name: nginx
+    state: latest
+
+- name: Start NGINX and Enable it on the every boot
+  tags: nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Remove default config
+  tags: nginx
+  file:
+    path: /etc/nginx/conf.d/default.conf
+    state: absent
+  
+- name: Copy NGINX config
+  tags: nginx
+  notify:
+    - Restart nginx
+  copy:
+    src: files/nginx/nginx.conf
+    dest: /etc/nginx/nginx.conf
