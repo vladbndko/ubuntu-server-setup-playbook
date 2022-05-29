@@ -5,6 +5,8 @@ ansible_user: root
 user:
   username: username
   password: password
+  ssh:
+    public: ~/.ssh/id_rsa.pub
 
 mysql:
   password: root

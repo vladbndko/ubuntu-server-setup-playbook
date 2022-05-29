@@ -29,7 +29,7 @@
   authorized_key:
     user: "{{ user.username }}"
     state: present
-    key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
+    key: "{{ lookup('file', user.ssh.public) }}"
 
 - name: Allow specific users to log in
   tags: user
