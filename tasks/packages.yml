@@ -23,6 +23,7 @@
     - ca-certificates
     - python3-pip
     - bat
+    - apache2-utils
 
 - name: Add Docker GPG apt Key
   tags: packages

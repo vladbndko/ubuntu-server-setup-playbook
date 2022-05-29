@@ -9,9 +9,11 @@
     - import_tasks: tasks/firewall.yml
     - import_tasks: tasks/user.yml
     - import_tasks: tasks/nginx.yml
+    - import_tasks: tasks/postgres.yml
     - import_tasks: tasks/mysql.yml
     - import_tasks: tasks/adminer.yml
     - import_tasks: tasks/websites.yml
+    - import_tasks: tasks/umami.yml
 
   # Handlers
   handlers:

@@ -26,9 +26,20 @@
   notify:
     - Restart nginx
 
+- name: Copy .htpasswd
+  tags: websites
+  template:
+    src: files/nginx/.htpasswd.j2
+    dest: "/etc/nginx/.htpasswd.{{ item.host }}"
+    owner: root
+    group: www-data
+    mode: 0644
+  loop: "{{ websites }}"
+  when: item.basicauth != false
+
 - name: Generate SSL
   tags: websites
-  shell: "certbot --nginx --agree-tos --redirect --force-renewal --email {{ user.email }} -d {{ item.host }} -d www.{{ item.host }} -q"
+  shell: "certbot --nginx --agree-tos --redirect  --email {{ user.email }} -d {{ item.host }} -d www.{{ item.host }} -q" # --force-renewal
   loop: "{{ websites }}"
 
 - name: "Add certbot to cron"

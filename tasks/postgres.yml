@@ -1,0 +1,28 @@
+- name: Create a network
+  tags: postgres
+  docker_network:
+    name: db_network
+
+- name: Pull an PostgreSQL image
+  tags: postgres
+  docker_image:
+    name: postgres
+    source: pull
+    tag: "{{ postgres.version }}"
+
+- name: Create a PostgreSQL container
+  tags: postgres
+  docker_container:
+    name: postgres_server
+    image: "postgres:{{ postgres.version }}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart_policy: unless-stopped
+    restart: true
+    env:
+      POSTGRES_USER: "{{ postgres.username }}"
+      POSTGRES_PASSWORD: "{{ postgres.password }}"
+    ports:
+      - "5432:5432"
+    networks:
+      - name: db_network

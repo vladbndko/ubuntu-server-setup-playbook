@@ -8,6 +8,7 @@ cp inventory.example.ini inventory.ini
 ## Docker containers
 - Adminer
 - MySQL
+- PostgreSQL
 
 ## Soft
 - Nginx (latest)

@@ -2,6 +2,8 @@ distribution_release: focal
 
 ansible_user: root
 
+domain: host.com
+
 user:
   username: username
   password: password
@@ -14,9 +16,16 @@ mysql:
   version: 8
   port: 3306
 
+postgres:
+  username: root
+  password: password
+  version: 14.2
+
 adminer:
   version: 4
-  port: 8080
+
+umami:
+  port: 3000
 
 websites:
   -
@@ -25,7 +34,14 @@ websites:
     basicauth:
       username: adminer
       password: adminer
-    proxy: true
+    proxy:
+      port: 8080
+  -
+    host: umami.host.com
+    config: umami
+    basicauth: false
+    proxy:
+      port: 3000
   -
     host: host.com
     config: static
