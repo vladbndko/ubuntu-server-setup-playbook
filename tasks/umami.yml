@@ -14,6 +14,6 @@
     restart: true
     env:
       DATABASE_URL: "mysql://root:{{ mysql.password }}@{{ domain }}:{{ mysql.port | int }}/umami"
-      HASH_SALT: 1851f8db32271fe25f5611fc938b2e4111112
+      HASH_SALT: $2a$12$NOvlvJgRpxZ4JPr4fMsbletV6qr7UbfWojAjRg5gJuy/bb2rHIXMC
     ports:
       - "{{ umami.port }}:3000"
