@@ -1,11 +1,31 @@
-username: username
-
 distribution_release: focal
 
-mysql:
+ansible_user: root
+
+user:
   username: username
   password: password
+
+mysql:
+  password: root
+  version: 8
   port: 3306
 
 adminer:
+  version: 4
   port: 8080
+
+websites:
+  -
+    host: adminer.host.com
+    config: adminer
+    basicauth:
+      username: adminer
+      password: adminer
+    proxy: true
+  -
+    host: host.com
+    config: static
+    basicauth: false
+    proxy: false
+  
