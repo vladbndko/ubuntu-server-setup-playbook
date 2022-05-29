@@ -5,6 +5,7 @@ ansible_user: root
 user:
   username: username
   password: password
+  email: username@host.com # For cerbot notifications
   ssh:
     public: ~/.ssh/id_rsa.pub
 

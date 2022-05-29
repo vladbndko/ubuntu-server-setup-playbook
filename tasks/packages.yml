@@ -12,11 +12,15 @@
     state: latest
   loop:
     - lsb-release
-    - ca-certificates
-    - apt-transport-https
     - software-properties-common
+    - git
+    - mcrypt
     - unzip
     - imagemagick
+    - certbot
+    - python3-certbot-nginx
+    - apt-transport-https
+    - ca-certificates
     - python3-pip
     - bat
 

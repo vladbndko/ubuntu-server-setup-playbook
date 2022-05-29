@@ -25,3 +25,19 @@
   loop: "{{ websites }}"
   notify:
     - Restart nginx
+
+- name: Generate SSL
+  tags: websites
+  shell: "certbot --nginx --agree-tos --redirect --force-renewal --email {{ user.email }} -d {{ item.host }} -d www.{{ item.host }} -q"
+  loop: "{{ websites }}"
+
+- name: "Add certbot to cron"
+  tags: websites
+  cron:
+    name: Cerbot renew
+    minute: "0"
+    hour: "12"
+    job: "certbot renew --post-hook 'systemctl restart nginx'"
+
+
+    

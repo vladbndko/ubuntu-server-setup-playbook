@@ -1,7 +1,7 @@
 server {
     listen 80;
     listen [::]:80;
-    server_name {{ item.host }};
+    server_name {{ item.host }} www.{{ item.host }};
     root   /var/www/{{ item.host }};
 	index  index.html;
 
