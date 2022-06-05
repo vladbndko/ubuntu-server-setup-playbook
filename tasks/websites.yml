@@ -20,7 +20,7 @@
 - name: Copy NGINX config
   tags: websites
   template:
-    src: "files/nginx/templates/{{ item.config }}.j2"
+    src: "files/nginx/configs/{{ item.config }}.j2"
     dest: "/etc/nginx/conf.d/{{ item.host }}.conf"
   loop: "{{ websites }}"
   notify:
@@ -37,18 +37,15 @@
   loop: "{{ websites }}"
   when: item.basicauth != false
 
-- name: Generate SSL
-  tags: websites
-  shell: "certbot --nginx --agree-tos --redirect  --email {{ user.email }} -d {{ item.host }} -d www.{{ item.host }} -q" # --force-renewal
-  loop: "{{ websites }}"
+# - name: Generate SSL
+#   tags: websites
+#   shell: "certbot --nginx --agree-tos --redirect  --email {{ user.email }} -d {{ item.host }} -d www.{{ item.host }} -q" # --force-renewal
+#   loop: "{{ websites }}"
 
-- name: "Add certbot to cron"
-  tags: websites
-  cron:
-    name: Cerbot renew
-    minute: "0"
-    hour: "12"
-    job: "certbot renew --post-hook 'systemctl restart nginx'"
-
-
-    
+# - name: "Add certbot to cron"
+#   tags: websites
+#   cron:
+#     name: Cerbot renew
+#     minute: "0"
+#     hour: "12"
+#     job: "certbot renew --post-hook 'systemctl restart nginx'"

@@ -1,0 +1,6 @@
+{% extends "files/nginx/templates/ssl.j2" %}
+
+{% block config %}
+    root   /var/www/{{ item.host }};
+    index  index.html;
+{% endblock %}

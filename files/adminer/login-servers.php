@@ -9,6 +9,6 @@ return new AdminerLoginServers
 ([
     'MySQL' => ['server' => 'mysql_server', 'driver' => 'server'],
     # 'MariaDB' => ['server' => 'mariadb_server', 'driver' => 'server'],
-    # 'PostgreSQL' => ['server' => 'postgres_server', 'driver' => 'pgsql'],
+    'PostgreSQL' => ['server' => 'postgres_server', 'driver' => 'pgsql'],
     # 'MongoDB' => ['server' => 'mongo_server', 'driver' => 'mongo'],
 ]);

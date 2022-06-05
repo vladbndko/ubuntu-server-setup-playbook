@@ -1,0 +1,37 @@
+server {
+	listen 80;
+	listen [::]:80;
+
+    server_name {{ item.host }} www.{{ item.host }};
+
+    return 301 https://{{ item.host }}$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    if ($host = www.{{ item.host }}) {
+        return 301 https://{{ item.host }}$request_uri;
+    }
+
+    server_name {{ item.host }} www.{{ item.host }};
+
+    {% block config %}{% endblock %}
+
+    # Logs
+    error_log  /var/log/nginx/{{ item.host }}-error.log;
+    access_log /var/log/nginx/{{ item.host }}-access.log;
+
+    # SSL
+    ssl_certificate /etc/letsencrypt/live/{{ item.host }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ item.host }}/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    {% if item.basicauth %}
+    # Basic auth
+    auth_basic "Restricted Area";
+    auth_basic_user_file /etc/nginx/.htpasswd.{{ item.host }};
+    {% endif %}
+}

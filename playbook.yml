@@ -13,6 +13,7 @@
     - import_tasks: tasks/mysql.yml
     - import_tasks: tasks/adminer.yml
     - import_tasks: tasks/websites.yml
+    - import_tasks: tasks/nodejs.yml
     - import_tasks: tasks/umami.yml
 
   # Handlers

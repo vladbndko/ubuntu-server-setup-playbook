@@ -19,6 +19,7 @@ mysql:
 postgres:
   username: root
   password: password
+  port: 5432
   version: 14.2
 
 adminer:

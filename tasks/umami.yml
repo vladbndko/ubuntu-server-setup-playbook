@@ -3,17 +3,19 @@
   docker_image:
     name: ghcr.io/mikecao/umami
     source: pull
-    tag: mysql-latest
+    tag: postgresql-latest
 
 - name: Create a Umami container
   tags: umami
   docker_container:
     name: umami
-    image: ghcr.io/mikecao/umami:mysql-latest
+    image: ghcr.io/mikecao/umami:postgresql-latest
     restart_policy: unless-stopped
     restart: true
     env:
-      DATABASE_URL: "mysql://root:{{ mysql.password }}@{{ domain }}:{{ mysql.port | int }}/umami"
+      DATABASE_URL: "postgresql://{{ postgres.username }}:{{ postgres.password }}@postgres_server:{{ postgres.port }}/umami"
       HASH_SALT: $2a$12$NOvlvJgRpxZ4JPr4fMsbletV6qr7UbfWojAjRg5gJuy/bb2rHIXMC
     ports:
       - "{{ umami.port }}:3000"
+    networks:
+      - name: db_network
